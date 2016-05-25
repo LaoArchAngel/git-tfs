@@ -25,6 +25,9 @@ namespace Sep.Git.Tfs.Util
 
         public GitObject GetGitObject(string tfsPath)
         {
+            if (tfsPath[0] == '$' && tfsPath[1] == '/' && tfsPath[2] != '/')
+                tfsPath = tfsPath.Replace(@"$/", @"$//");
+
             var pathInGitRepo = _remote.GetPathInGitRepo(tfsPath);
             if (pathInGitRepo == null)
                 return null;
